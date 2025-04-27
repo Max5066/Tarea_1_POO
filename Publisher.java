@@ -1,20 +1,21 @@
 public class Publisher extends Component {
-    protected Publisher() {
-    } // to ban calls to this constructor
+   protected Publisher() {} // to ban calls to this constructor
 
-    public Publisher(String name, Broker broker, String topicName) {
-        super(name, topicName);
-        this.broker = broker;
-    }
+   public Publisher(String name, Broker broker, String topicName) {
+      super(name, topicName);
+      this.broker = broker;
+      // Crear el tópico si no existe
+      Topic topic = broker.findTopic(topicName);
+      if (topic == null) {
+         topic = broker.createTopic(topicName);
+      }
+      this.topic = topic;
+   }
 
-    protected void publishNewEvent(String message) {
-        topic = this.broker.findTopic(topicName);
-        if (topic == null) {
-            topic = broker.createTopic(topicName);
-        }
-        topic.notify(message);
-    }
+   protected void publishNewEvent(String message) {
+      topic.notify(message);
+   }
 
-    private Broker broker;
-    private Topic topic;
+   private Topic topic;
+   private Broker broker;
 }

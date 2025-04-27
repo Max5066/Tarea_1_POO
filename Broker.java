@@ -6,18 +6,21 @@ public class Broker {
     }
 
     public Topic createTopic(String topicName) {
-        topic = new Topic(topicName);
+        Topic topic = new Topic(topicName);
         topics.add(topic);
         return topic;
     }
 
     public boolean subscribe(Subscriber sub) {
+        String topicName = sub.getTopicName();
+        Topic topic = findTopic(topicName);
 
-        if ((topic = findTopic(sub.getTopicName())) != null) {
+        if (topic != null) {
             topic.subscribe(sub);
             return true;
-        } else
-            return false; // topic does not exist.
+        } else {
+            return false; // topic does not exist
+        }
     }
 
     public Topic findTopic(String topicName) {
@@ -26,8 +29,8 @@ public class Broker {
                 return topic;
             }
         }
-        return null; // no se encontró el topic
+        return null;  // topic not found
     }
-    public Topic topic;
+
     private ArrayList<Topic> topics;
 }
