@@ -3,7 +3,7 @@ JFLAGS = -g -encoding ISO8859_1
 JC = javac
 JVM = java
 RM = rm
-FILE=config2.txt
+FILE= configurationFile.txt
 .SUFFIXES: .java .class
 .java.class:
 	$(JC) $(JFLAGS) $*.java
@@ -25,7 +25,7 @@ default: classes
 classes: $(CLASSES:.java=.class)
 
 run:
-	$(JVM) $(MAIN)
+	$(JVM) $(MAIN) $(FILE)
 
 clean:
 	$(RM) *.class
